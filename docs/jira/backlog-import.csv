@@ -1,0 +1,248 @@
+Work item ID,Work type,Summary,Description,Priority,Labels,Labels,Parent
+1,Epic,Accounts,"Sign-up, login/logout and role-based access for students and admins.",,,,
+2,Epic,Events,"Creating, listing, editing and searching college and tech events.",,,,
+3,Epic,Registration,"Students reserving and cancelling seats, with seat limits enforced.",,,,
+4,Epic,Admin Management,Admins view and manage the registrations of each event.,,,,
+5,Epic,Notifications,"Confirmation and other emails, with a delivery log.",,,,
+6,Epic,Platform,"CI pipeline, automated testing and deployment.",,,,
+115,Story,US-15 Repository and CI pipeline,"*User story*
+As the development team, we want every push and pull request linted, type-checked and unit-tested automatically, so that broken code never reaches main.
+
+*Acceptance criteria*
+* Given a pull request is opened, then GitHub Actions runs lint, type check and unit tests and shows pass or fail on the PR.
+* Given CI fails, then the PR cannot be merged.
+* Test results and coverage are saved as build artifacts.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,6
+101,Story,US-01 Sign up,"*User story*
+As a student, I want to create an account with my name, email and password, so that I can register for events.
+
+*Acceptance criteria*
+* Given I am on the sign-up page, when I submit a valid name, a new email and a password of 8 or more characters, then my account is created as a STUDENT and I am logged in.
+* Given the email is already used, when I submit, then I see ""Email already registered"" and no account is created.
+* Given a field is empty or the email is invalid, when I submit, then I see an error next to that field.
+* The password is stored hashed with bcrypt, never as plain text.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,1
+102,Story,US-02 Log in and log out with roles,"*User story*
+As a registered user, I want to log in and log out, so that only I can see my registrations and only admins can manage events.
+
+*Acceptance criteria*
+* Given correct credentials, when I log in, then a student lands on the Events page and an admin lands on the Admin dashboard.
+* Given a wrong email or password, then I see ""Invalid email or password"", without revealing which one was wrong.
+* Given I am a student, when I open any /admin page, then I am sent away and cannot see it.
+* Given I click Log out, then my session ends and protected pages ask me to log in again.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,1
+103,Story,US-03 Admin creates an event,"*User story*
+As an admin, I want to create an event with a title, description, category (College or Tech), venue, date and time, registration deadline and capacity, so that students can find it and register.
+
+*Acceptance criteria*
+* Given all fields are valid, when I save, then the event appears in the public events list.
+* Given the deadline is after the event start, or capacity is below 1, when I save, then I see a validation error and nothing is saved.
+* Given the event date is in the past, then I see ""Event date must be in the future"".
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,2
+104,Story,US-04 Browse upcoming events,"*User story*
+As a student, I want to see upcoming events with their date, venue and seats left, so that I can choose which one to attend.
+
+*Acceptance criteria*
+* Given published future events exist, when I open Events, then I see them sorted by date with seats left shown.
+* Past and cancelled events do not appear.
+* Given an event is full, then it shows ""Full"" and its Register button is disabled.
+* Clicking an event opens its details page.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,2
+107,Story,US-07 Register for an event,"*User story*
+As a student, I want to register for an event in one click, so that my seat is reserved.
+
+*Acceptance criteria*
+* Given I am logged in and the event is open with a free seat, when I click Register, then my registration is CONFIRMED and seats left drops by 1.
+* Given I am already registered for this event, then I see ""Already registered"" and no second registration is made.
+* Given the event is full, then I see ""Event full"".
+* Given the registration deadline has passed, then I see ""Registration closed"".
+* Given two students try to take the last seat at the same moment, then exactly one succeeds.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,tdd,3
+108,Story,US-08 View and cancel my registrations,"*User story*
+As a student, I want to see my registrations and cancel one, so that I can manage my plans and free my seat for someone else.
+
+*Acceptance criteria*
+* Given I have registrations, when I open My Registrations, then I see each event with its date and my status.
+* Given the event has not started, when I cancel, then my status becomes CANCELLED and seats left rises by 1.
+* Given I cancelled earlier, then I can register again while seats remain.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,3
+116,Story,US-16 Selenium smoke test,"*User story*
+As the development team, we want an automated browser test of the main path, so that we know sign-up and registration still work after every change.
+
+*Acceptance criteria*
+* Given CI runs, then headless Chrome signs up a new student, registers for a seeded event and sees the confirmation.
+* Given the test fails, then a screenshot is saved as an artifact.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,6
+112,Story,US-12 Confirmation email on registration,"*User story*
+As a student, I want a confirmation email when I register, so that I have proof of my seat and the event details.
+
+*Acceptance criteria*
+* Given my registration succeeds, then an email reaches my address with the event title, date, venue and my registration ID.
+* Given the email server fails, then my registration still succeeds and the email is logged as FAILED.
+* Every send attempt is recorded in the notification log with its status and time.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,tdd,5
+113,Story,US-13 Admin resends a confirmation,"*User story*
+As an admin, I want to resend a confirmation email, so that students whose first email failed still receive it.
+
+*Acceptance criteria*
+* Given a registration whose email status is FAILED, when I click Resend, then a new attempt is made and logged.
+* Given the resend succeeds, then the email status shows SENT.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Medium,should,,5
+109,Story,US-09 Admin views registrations per event,"*User story*
+As an admin, I want to see who registered for each event, so that I know who is attending.
+
+*Acceptance criteria*
+* Given I open an event in Admin, then I see each registrant's name, email, registration time, status and email status (SENT or FAILED).
+* The page shows confirmed registrations against capacity, for example ""42 / 60"".
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,4
+110,Story,US-10 Admin removes a registration,"*User story*
+As an admin, I want to remove a registration, so that I can handle duplicates or no-shows and free the seat.
+
+*Acceptance criteria*
+* Given I click Remove and confirm, then the registration becomes CANCELLED and seats left rises by 1.
+* Given I dismiss the confirmation, then nothing changes.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,4
+105,Story,US-05 Admin edits or cancels an event,"*User story*
+As an admin, I want to edit or cancel an event, so that students always see correct information.
+
+*Acceptance criteria*
+* Given I change details and save, then the event page shows the new details.
+* Given I set capacity below the number already registered, then I see an error and nothing is saved.
+* Given I cancel an event, then it disappears from the public list and new registrations are blocked.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Medium,should,,2
+106,Story,US-06 Search and filter events,"*User story*
+As a student, I want to search events by name and filter them by category and date, so that I can find relevant events quickly.
+
+*Acceptance criteria*
+* Given I type text in search, then only events whose title contains it are shown, ignoring upper and lower case.
+* Given I pick the Tech category, then only Tech events are shown.
+* Given nothing matches, then I see ""No events found"".
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Medium,should,,2
+117,Story,US-17 Full Selenium regression suite,"*User story*
+As the Product Owner, I want the acceptance criteria of every Must story checked by browser tests, so that we can demo with confidence.
+
+*Acceptance criteria*
+* Ten browser scenarios pass in CI: sign up and log in; browse with seats shown; register with email verified; duplicate blocked; full event blocked; cancel frees seat; admin creates event; admin removes registration; student blocked from /admin; filter events.
+* An HTML test report is produced for the project report.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,6
+118,Story,US-18 Docker setup and Vercel + Neon deployment,"*User story*
+As a stakeholder, I want the app on a public URL and also runnable offline, so that it can be demonstrated anywhere.
+
+*Acceptance criteria*
+* Given a merge to main, then Vercel deploys it to the live URL automatically.
+* Given a fresh machine, when we run docker compose up --build, then the app, the database and the test mail inbox start and the full flow works.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",High,must,,6
+111,Story,US-11 Export registrations as CSV,"*User story*
+As an admin, I want to download an event's registrations as a CSV file, so that I can prepare attendance sheets.
+
+*Acceptance criteria*
+* Given I click Export, then a CSV downloads with each registrant's name, email, status and registration time for that event.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Low,could,,4
+114,Story,US-14 Email when an event is cancelled,"*User story*
+As a student, I want an email if an event I registered for is cancelled, so that I do not turn up for nothing.
+
+*Acceptance criteria*
+* Given an admin cancels an event, then every CONFIRMED registrant gets a cancellation email, logged per person.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Low,could,,5
+119,Story,US-19 Waitlist with auto-promotion,"*User story*
+As a student, I want to join a waitlist when an event is full, so that I get a seat automatically if someone cancels.
+
+*Acceptance criteria*
+* Given an event is full, when I click Join waitlist, then I am added in the order I joined.
+* Given a confirmed student cancels, then the first person on the waitlist is confirmed and emailed.
+
+*Definition of Done*
+* Merged through a PR with 1 approval from another member
+* CI green
+* Owner has checked every acceptance criterion
+* Logic covered by tests",Low,could,,3

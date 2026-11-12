@@ -31,4 +31,25 @@ Students register for college and tech events. Admins manage registrations and s
 - `docs/testing/`: Agile Testing Quadrants and exploratory testing
 - `docs/metrics.md`, `docs/risks.md`: velocity, quality metrics and risk register
 
-The application code is added in Sprint 1 under story EV-7 (US-15).
+## Run it locally
+
+Needs Node.js 22 and Docker.
+
+```bash
+npm install
+cp .env.example .env
+docker compose up -d        # Postgres on port 5433, Mailpit inbox on http://localhost:8025
+npx prisma migrate dev      # create the tables
+npm run dev                 # http://localhost:3000
+```
+
+## Checks
+
+| Command | What it does |
+|---|---|
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript, including Next.js route types |
+| `npm test` | Vitest unit tests, writes `reports/junit.xml` |
+| `npm run test:coverage` | Unit tests with a coverage report in `coverage/` |
+
+GitHub Actions runs all of these on every pull request, then applies the migrations to a fresh Postgres and builds the app.

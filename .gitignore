@@ -1,20 +1,27 @@
 # dependencies
-node_modules/
+/node_modules
+/.pnp
+.pnp.*
 
-# environment and secrets
-.env
-.env.*
+# testing and reports
+/coverage
+/reports
+
+# next.js
+/.next/
+/out/
+/build
+
+# env files (only the example is committed)
+.env*
 !.env.example
 
-# build and test output
-.next/
-out/
-build/
-coverage/
-reports/
-*.log
-
-# editor and OS
+# misc
 .DS_Store
+*.pem
+*.log
+*.tsbuildinfo
+next-env.d.ts
+.vercel
 .idea/
 .vscode/

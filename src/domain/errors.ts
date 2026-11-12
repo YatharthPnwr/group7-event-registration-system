@@ -14,3 +14,38 @@ export class EmailAlreadyRegisteredError extends Error {
     this.name = "EmailAlreadyRegisteredError";
   }
 }
+
+export class EventNotFoundError extends Error {
+  constructor() {
+    super("Event not found");
+    this.name = "EventNotFoundError";
+  }
+}
+
+export class AlreadyRegisteredError extends Error {
+  constructor() {
+    super("Already registered");
+    this.name = "AlreadyRegisteredError";
+  }
+}
+
+export class EventFullError extends Error {
+  constructor() {
+    super("Event full");
+    this.name = "EventFullError";
+  }
+}
+
+export class RegistrationClosedError extends Error {
+  constructor() {
+    super("Registration closed");
+    this.name = "RegistrationClosedError";
+  }
+}
+
+export class EventCancelledError extends Error {
+  constructor() {
+    super("Event cancelled");
+    this.name = "EventCancelledError";
+  }
+}

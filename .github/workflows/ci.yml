@@ -64,4 +64,13 @@ jobs:
       - run: npm ci
       - name: Apply migrations to a fresh database
         run: npx prisma migrate deploy
+      - name: Integration tests against Postgres
+        run: npm run test:integration
+      - name: Upload integration test results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: integration-test-reports
+          path: reports/junit-integration.xml
+          if-no-files-found: warn
       - run: npm run build

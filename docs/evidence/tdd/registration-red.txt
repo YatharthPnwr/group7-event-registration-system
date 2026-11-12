@@ -1,0 +1,154 @@
+# TDD step 1 (RED): EV-12 registration rules, tests written before the implementation
+# 2026-11-12 13:48 IST · npx vitest run tests/unit/registration-service.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+
+ RUN  v4.1.12 <repo>
+
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > confirms the registration and takes one seat 3ms
+   → Not implemented
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects a second registration by the same student 0ms
+   → Not implemented
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration when the event is full 3ms
+   → expected error to be instance of EventFullError
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration after the deadline 1ms
+   → expected error to be instance of RegistrationClosedError
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for a cancelled event 1ms
+   → expected error to be instance of EventCancelledError
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for an event that does not exist 0ms
+   → expected error to be instance of EventNotFoundError
+ × tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > lets a student who cancelled register again, reusing the same registration 0ms
+   → Not implemented
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > confirms the registration and takes one seat
+Error: Not implemented
+ ❯ RegistrationService.register src/services/RegistrationService.ts:17:11
+     15|     void this.events;
+     16|     void this.registrations;
+     17|     throw new Error("Not implemented");
+       |           ^
+     18|   }
+     19| }
+ ❯ tests/unit/registration-service.test.ts:77:40
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects a second registration by the same student
+Error: Not implemented
+ ❯ RegistrationService.register src/services/RegistrationService.ts:17:11
+     15|     void this.events;
+     16|     void this.registrations;
+     17|     throw new Error("Not implemented");
+       |           ^
+     18|   }
+     19| }
+ ❯ tests/unit/registration-service.test.ts:84:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration when the event is full
+AssertionError: expected error to be instance of EventFullError
+
+- Expected:
+[Function EventFullError]
+
++ Received:
+Error {
+  "message": "Not implemented",
+}
+
+ ❯ tests/unit/registration-service.test.ts:94:64
+     92|     store.events.set("event-1", makeEvent({ capacity: 5, seatsTaken: 5…
+     93|
+     94|     await expect(service.register("student-1", "event-1", NOW)).reject…
+       |                                                                ^
+     95|     expect(store.registrations).toHaveLength(0);
+     96|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration after the deadline
+AssertionError: expected error to be instance of RegistrationClosedError
+
+- Expected:
+[Function RegistrationClosedError]
+
++ Received:
+Error {
+  "message": "Not implemented",
+}
+
+ ❯ tests/unit/registration-service.test.ts:101:64
+     99|     store.events.set("event-1", makeEvent({ registrationDeadline: new …
+    100|
+    101|     await expect(service.register("student-1", "event-1", NOW)).reject…
+       |                                                                ^
+    102|     expect(store.registrations).toHaveLength(0);
+    103|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for a cancelled event
+AssertionError: expected error to be instance of EventCancelledError
+
+- Expected:
+[Function EventCancelledError]
+
++ Received:
+Error {
+  "message": "Not implemented",
+}
+
+ ❯ tests/unit/registration-service.test.ts:108:64
+    106|     store.events.set("event-1", makeEvent({ status: "CANCELLED" }));
+    107|
+    108|     await expect(service.register("student-1", "event-1", NOW)).reject…
+       |                                                                ^
+    109|   });
+    110|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for an event that does not exist
+AssertionError: expected error to be instance of EventNotFoundError
+
+- Expected:
+[Function EventNotFoundError]
+
++ Received:
+Error {
+  "message": "Not implemented",
+}
+
+ ❯ tests/unit/registration-service.test.ts:112:64
+    110|
+    111|   it("rejects registration for an event that does not exist", async ()…
+    112|     await expect(service.register("student-1", "missing", NOW)).reject…
+       |                                                                ^
+    113|   });
+    114|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > lets a student who cancelled register again, reusing the same registration
+Error: Not implemented
+ ❯ RegistrationService.register src/services/RegistrationService.ts:17:11
+     15|     void this.events;
+     16|     void this.registrations;
+     17|     throw new Error("Not implemented");
+       |           ^
+     18|   }
+     19| }
+ ❯ tests/unit/registration-service.test.ts:116:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed (7)
+   Start at  13:48:48
+   Duration  138ms (transform 23ms, setup 0ms, import 34ms, tests 9ms, environment 0ms)
+

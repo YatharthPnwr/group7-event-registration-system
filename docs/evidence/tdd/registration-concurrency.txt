@@ -1,0 +1,16 @@
+# EV-12 integration tests against Postgres: concurrent registrations
+# 2026-11-12 13:50 IST · npm run test:integration
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.integration.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+
+ RUN  v4.1.12 <repo>
+
+ ✓ tests/integration/registration-concurrency.test.ts > Registration against Postgres (US-07) > gives the last seat to exactly one of two students registering at the same moment 77ms
+ ✓ tests/integration/registration-concurrency.test.ts > Registration against Postgres (US-07) > does not double-book when the same student clicks Register twice at once 12ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  13:50:26
+   Duration  245ms (transform 29ms, setup 0ms, import 61ms, tests 94ms, environment 0ms)
+

@@ -1,0 +1,21 @@
+# TDD step 3 (REFACTOR): rules extracted into EligibilityRule classes, tests still green
+# 2026-11-12 13:49 IST · npx vitest run tests/unit/registration-service.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+
+ RUN  v4.1.12 <repo>
+
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > confirms the registration and takes one seat 2ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects a second registration by the same student 1ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration when the event is full 0ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration after the deadline 0ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for a cancelled event 0ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > rejects registration for an event that does not exist 0ms
+ ✓ tests/unit/registration-service.test.ts > RegistrationService.register (US-07) > lets a student who cancelled register again, reusing the same registration 0ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  13:49:26
+   Duration  136ms (transform 25ms, setup 0ms, import 38ms, tests 6ms, environment 0ms)
+

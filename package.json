@@ -13,7 +13,9 @@
     "postinstall": "prisma generate",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
@@ -39,5 +41,8 @@
   },
   "engines": {
     "node": ">=20.9"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
   }
 }

@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+enum EventCategory {
+  COLLEGE
+  TECH
+}
+
+enum EventStatus {
+  PUBLISHED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+enum NotificationType {
+  CONFIRMATION
+  CANCELLATION
+}
+
+enum NotificationStatus {
+  SENT
+  FAILED
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  passwordHash  String
+  role          Role           @default(STUDENT)
+  createdAt     DateTime       @default(now())
+  registrations Registration[]
+}
+
+model Event {
+  id                   String         @id @default(cuid())
+  title                String
+  description          String
+  category             EventCategory
+  venue                String
+  startsAt             DateTime
+  registrationDeadline DateTime
+  capacity             Int
+  seatsTaken           Int            @default(0)
+  status               EventStatus    @default(PUBLISHED)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  registrations        Registration[]
+
+  @@index([startsAt])
+}
+
+model Registration {
+  id            String             @id @default(cuid())
+  userId        String
+  eventId       String
+  status        RegistrationStatus @default(CONFIRMED)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event         Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  notifications NotificationLog[]
+
+  @@unique([userId, eventId])
+}
+
+model NotificationLog {
+  id             String             @id @default(cuid())
+  registrationId String
+  type           NotificationType
+  status         NotificationStatus
+  error          String?
+  createdAt      DateTime           @default(now())
+  registration   Registration       @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+
+  @@index([registrationId])
+}

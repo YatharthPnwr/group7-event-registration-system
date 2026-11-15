@@ -1,7 +1,8 @@
-# Formal Code Review (Sprint 2)
+# Code Review (Sprint 2)
 
-**Date:** Sat 14 Nov 2026 **Reviewer:** Dhanraj **Author:** Yatharth
-**Pull request:** #____ (link) **Story:** ____
+> To be completed by Aarya or Dhanraj: pick one Sprint 2 PR (suggested: #8 EV-15 confirmation email), review it on GitHub and leave at least 3 comments. GitHub allows comments on merged PRs. Record them below.
+
+**Reviewer:** ____ **Author:** Yatharth **Pull request:** #____ **Date:** ____
 
 ## Review checklist
 
@@ -15,12 +16,8 @@
 
 ## Comments raised
 
-| # | File and line | Comment | Category | Author's response | Fixed in commit |
-|---|---|---|---|---|---|
-| 1 | | | naming / SOLID / test / bug | | |
-| 2 | | | | | |
-| 3 | | | | | |
-
-**Outcome:** approved / changes requested
-
-**Evidence:** `../evidence/screenshots/2026-11-14_code-review.png`
+| # | File and line | Comment | Category | Author's response |
+|---|---|---|---|---|
+| 1 | | | | |
+| 2 | | | | |
+| 3 | | | | |

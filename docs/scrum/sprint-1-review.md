@@ -1,33 +1,27 @@
 # Sprint 1 Review
 
-**Date:** Fri 13 Nov 2026, 13:00 **Led by:** Aarya (Product Owner)
-**Present:** Aarya, Dhanraj, Yatharth **Stakeholder:** ________ (classmate)
+> Draft prepared from the Jira and GitHub records on 15 Nov 2026. The team adds its own observations and the stakeholder feedback during the review discussion.
 
-**Sprint goal:** A student can sign up, browse events and register for a seat, on green CI.
-**Goal met?** yes / partly / no. Explain why: ________
+**Held:** Sun 15 Nov 2026, before Sprint 1 was completed (the planned review on Fri 13 Nov did not take place)
+**Sprint goal met?** **Partly.** Sign-up, registration and the CI pipeline were delivered. Login, browsing, admin event creation, cancelling and the Selenium test were not.
 
 ## Results
 
 | | Story points |
 |---|---|
-| Committed | |
-| Completed (fully Done) | |
-| Not Done, returned to backlog | |
+| Planned | 25 |
+| Completed (fully Done, merged with CI green) | 11 |
+| Not Done, carried into Sprint 2 | 14 |
 
-## Stories demoed (Done only)
+## Increment demonstrated
 
-| Story | Demoed by | Accepted by PO? |
+| Story | PR | What was shown |
 |---|---|---|
-| | | |
+| EV-7 Repository and CI pipeline | #1 | GitHub Actions running lint, typecheck, unit tests, migrations and build on every PR |
+| EV-8 Sign up | #2 | Sign-up form with per-field errors; new student logged in straight away |
+| EV-12 Register for an event (TDD 1) | #3 | Register button, seats left dropping by one, "Already registered", "Event full", "Registration closed"; red/green/refactor commits |
 
-## Stakeholder feedback
+## Feedback and backlog changes
 
-| Feedback | Action | New backlog item (Jira key) |
-|---|---|---|
-| | | |
-
-## Backlog changes after review
-
--
-
-**Evidence:** `../evidence/screenshots/2026-11-13_sprint1-review.png`
+- _Stakeholder feedback: to be added by the team._
+- Carried over into Sprint 2: EV-9, EV-10, EV-11, EV-13, EV-14.

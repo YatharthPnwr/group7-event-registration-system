@@ -1,0 +1,6 @@
+{
+  "spec": ["tests/e2e/**/*.test.mjs"],
+  "timeout": 60000,
+  "reporter": "mochawesome",
+  "reporter-option": ["reportDir=reports/e2e", "reportFilename=selenium-report", "charts=true", "quiet=true"]
+}

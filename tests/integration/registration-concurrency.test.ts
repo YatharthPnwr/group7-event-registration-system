@@ -85,3 +85,20 @@ describe("Registration against Postgres (US-07)", () => {
     expect(await db.registration.count({ where: { eventId } })).toBe(1);
   });
 });
+
+describe("Cancelling against Postgres (US-08)", () => {
+  it("frees the seat so another student can take it, and a double cancel frees only one seat", async () => {
+    const eventId = await createEvent(1);
+    const [first, second] = await Promise.all([createStudent("cancel-a"), createStudent("cancel-b")]);
+    const registration = await service.register(first, eventId);
+
+    const results = await Promise.allSettled([
+      service.cancel(first, registration.id),
+      service.cancel(first, registration.id),
+    ]);
+    expect(results.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect((await db.event.findUniqueOrThrow({ where: { id: eventId } })).seatsTaken).toBe(0);
+
+    await expect(service.register(second, eventId)).resolves.toMatchObject({ status: "CONFIRMED" });
+  });
+});

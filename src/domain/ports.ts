@@ -1,5 +1,5 @@
 import type { EventRecord } from "./event";
-import type { RegistrationRecord } from "./registration";
+import type { RegistrationRecord, RegistrationWithEvent } from "./registration";
 import type { Role, UserRecord } from "./user";
 
 // Ports: services depend on these interfaces, never on Prisma or bcrypt directly
@@ -41,6 +41,13 @@ export interface RegistrationRepository {
    * Throws EventFullError if the last seat was taken meanwhile.
    */
   confirm(input: ConfirmRegistration): Promise<RegistrationRecord>;
+  findWithEvent(registrationId: string): Promise<RegistrationWithEvent | null>;
+  listForUser(userId: string): Promise<RegistrationWithEvent[]>;
+  /**
+   * Marks a CONFIRMED registration CANCELLED and frees its seat atomically.
+   * Throws CancellationNotAllowedError if it was already cancelled meanwhile.
+   */
+  cancel(registrationId: string): Promise<RegistrationRecord>;
 }
 
 export interface UpcomingEventsQuery {

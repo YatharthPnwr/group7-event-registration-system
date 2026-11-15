@@ -1,6 +1,6 @@
 import type { EventRecord } from "./event";
 import type { EmailMessage, NotificationLogEntry } from "./notification";
-import type { RegistrationRecord, RegistrationWithEvent } from "./registration";
+import type { EventRegistrant, RegistrationRecord, RegistrationWithEvent } from "./registration";
 import type { Role, UserRecord } from "./user";
 
 // Ports: services depend on these interfaces, never on Prisma or bcrypt directly
@@ -80,4 +80,9 @@ export interface NotificationLog {
 
 export interface UserLookup {
   findById(id: string): Promise<UserRecord | null>;
+}
+
+export interface EventRegistrantsQuery {
+  /** Everyone who registered for the event, oldest registration first. */
+  listForEvent(eventId: string): Promise<EventRegistrant[]>;
 }

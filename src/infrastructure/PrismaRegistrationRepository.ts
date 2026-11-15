@@ -1,13 +1,13 @@
 import { Prisma, type PrismaClient } from "@prisma/client";
 import { AlreadyRegisteredError, CancellationNotAllowedError, EventFullError } from "@/domain/errors";
-import type { ConfirmRegistration, RegistrationRepository } from "@/domain/ports";
-import type { RegistrationRecord, RegistrationWithEvent } from "@/domain/registration";
+import type { ConfirmRegistration, EventRegistrantsQuery, RegistrationRepository } from "@/domain/ports";
+import type { EventRegistrant, RegistrationRecord, RegistrationWithEvent } from "@/domain/registration";
 
 function toRecord(row: { id: string; userId: string; eventId: string; status: RegistrationRecord["status"] }) {
   return { id: row.id, userId: row.userId, eventId: row.eventId, status: row.status };
 }
 
-export class PrismaRegistrationRepository implements RegistrationRepository {
+export class PrismaRegistrationRepository implements RegistrationRepository, EventRegistrantsQuery {
   constructor(private readonly db: PrismaClient) {}
 
   async findByUserAndEvent(userId: string, eventId: string): Promise<RegistrationRecord | null> {
@@ -84,5 +84,29 @@ export class PrismaRegistrationRepository implements RegistrationRepository {
         WHERE "id" = ${row.eventId}`;
       return toRecord(row);
     });
+  }
+
+  async listForEvent(eventId: string): Promise<EventRegistrant[]> {
+    const rows = await this.db.registration.findMany({
+      where: { eventId },
+      orderBy: { createdAt: "asc" },
+      include: {
+        user: { select: { name: true, email: true } },
+        notifications: {
+          where: { type: "CONFIRMATION" },
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          select: { status: true },
+        },
+      },
+    });
+    return rows.map((row) => ({
+      registrationId: row.id,
+      name: row.user.name,
+      email: row.user.email,
+      registeredAt: row.createdAt,
+      status: row.status,
+      emailStatus: row.notifications[0]?.status ?? null,
+    }));
   }
 }

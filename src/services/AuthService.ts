@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { EmailAlreadyRegisteredError, ValidationError, type FieldErrors } from "@/domain/errors";
+import {
+  EmailAlreadyRegisteredError,
+  InvalidCredentialsError,
+  ValidationError,
+  type FieldErrors,
+} from "@/domain/errors";
 import type { PasswordHasher, UserRepository } from "@/domain/ports";
 import { toPublicUser, type User } from "@/domain/user";
 
@@ -10,6 +15,11 @@ const signUpSchema = z.object({
 });
 
 export type SignUpInput = z.input<typeof signUpSchema>;
+
+const logInSchema = z.object({
+  email: z.string().trim().toLowerCase().min(1),
+  password: z.string().min(1),
+});
 
 function toFieldErrors(error: z.ZodError): FieldErrors {
   const fieldErrors: FieldErrors = {};
@@ -41,5 +51,29 @@ export class AuthService {
     const passwordHash = await this.hasher.hash(password);
     const created = await this.users.create({ name, email, passwordHash, role: "STUDENT" });
     return toPublicUser(created);
+  }
+
+  private dummyHash?: Promise<string>;
+
+  /**
+   * US-02: checks an email and password. The error never says which one was
+   * wrong, and an unknown email still runs a hash comparison so response
+   * times do not reveal which emails are registered.
+   */
+  async logIn(input: unknown): Promise<User> {
+    const parsed = logInSchema.safeParse(input);
+    if (!parsed.success) throw new InvalidCredentialsError();
+    const { email, password } = parsed.data;
+
+    const record = await this.users.findByEmail(email);
+    if (!record) {
+      this.dummyHash ??= this.hasher.hash("timing-equaliser");
+      await this.hasher.verify(password, await this.dummyHash);
+      throw new InvalidCredentialsError();
+    }
+    if (!(await this.hasher.verify(password, record.passwordHash))) {
+      throw new InvalidCredentialsError();
+    }
+    return toPublicUser(record);
   }
 }

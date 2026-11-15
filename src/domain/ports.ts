@@ -42,3 +42,15 @@ export interface RegistrationRepository {
    */
   confirm(input: ConfirmRegistration): Promise<RegistrationRecord>;
 }
+
+export interface UpcomingEventsQuery {
+  now: Date;
+  /** Case-insensitive match on the title (US-06). */
+  search?: string;
+  category?: EventRecord["category"];
+}
+
+export interface EventCatalog {
+  /** Published events that have not started yet, soonest first. */
+  findUpcoming(query: UpcomingEventsQuery): Promise<EventRecord[]>;
+}

@@ -11,6 +11,9 @@ export async function SiteHeader() {
           Event Registration
         </Link>
         <nav className="flex items-center gap-4 text-sm">
+          <Link href="/events" className="hover:underline">
+            Events
+          </Link>
           {session ? (
             <span id="current-user">
               Signed in as <strong>{session.name}</strong> (

@@ -8,6 +8,7 @@ import { RegistrationService } from "@/services/RegistrationService";
 
 // Composition root: the one place that picks concrete implementations.
 export const eventRepository = new PrismaEventRepository(prisma);
+export const eventCatalog = eventRepository;
 export const registrationRepository = new PrismaRegistrationRepository(prisma);
 
 export const authService = new AuthService(

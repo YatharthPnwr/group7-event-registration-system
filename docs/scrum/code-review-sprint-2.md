@@ -1,23 +1,14 @@
 # Code Review (Sprint 2)
 
-> To be completed by Aarya or Dhanraj: pick one Sprint 2 PR (suggested: #8 EV-15 confirmation email), review it on GitHub and leave at least 3 comments. GitHub allows comments on merged PRs. Record them below.
+No written review comments were left on the Sprint 2 pull requests (#4–#11). Each was merged once its three required CI checks passed.
 
-**Reviewer:** ____ **Author:** Yatharth **Pull request:** #____ **Date:** ____
+The Sprint 2 code was reviewed afterwards in a pair-programming walkthrough.
 
-## Review checklist
+**Date:** Sun 15 Nov 2026, 23:50 IST, over Google Meet **Driver:** Yatharth (shared his editor) **Navigator:** Aarya
 
-- [ ] Each class or function has one job (SOLID: S)
-- [ ] New behaviour is added without editing tested code (SOLID: O)
-- [ ] Services depend on interfaces, not on Prisma or Nodemailer directly (SOLID: D)
-- [ ] Tests cover the acceptance criteria
-- [ ] Names are clear and there is no dead code
-- [ ] Errors are handled and shown to the user
-- [ ] No secrets in code
+| Code walked through | Story | Commit | Pull request |
+|---|---|---|---|
+| `src/app/api/admin/events/route.ts`, `POST /api/admin/events` | EV-10 Admin creates an event | `6491eaf` | #6 |
+| `src/app/api/registrations/[id]/cancel/route.ts`, `POST /api/registrations/:id/cancel` | EV-13 View and cancel my registrations | `bc2b162` | #7 |
 
-## Comments raised
-
-| # | File and line | Comment | Category | Author's response |
-|---|---|---|---|---|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
+Screenshots of the session are in the printed report (Figures 6 and 7). They are not committed here because this repository is public and the screenshots show team members' faces.

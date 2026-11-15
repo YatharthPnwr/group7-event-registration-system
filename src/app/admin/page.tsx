@@ -40,7 +40,9 @@ export default async function AdminDashboard() {
               </td>
               <td className="py-3 pr-4">{formatDateTime(event.startsAt)}</td>
               <td className="py-3 pr-4">
-                {event.seatsTaken} / {event.capacity}
+                <Link href={`/admin/events/${event.id}`} className="text-blue-600 hover:underline">
+                  {event.seatsTaken} / {event.capacity}
+                </Link>
               </td>
               <td className="py-3">{event.status === "CANCELLED" ? "Cancelled" : "Published"}</td>
             </tr>

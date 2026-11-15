@@ -14,6 +14,7 @@ import { RegistrationService } from "@/services/RegistrationService";
 export const eventRepository = new PrismaEventRepository(prisma);
 export const eventCatalog = eventRepository;
 export const registrationRepository = new PrismaRegistrationRepository(prisma);
+export const eventRegistrants = registrationRepository;
 
 export const userRepository = new PrismaUserRepository(prisma);
 

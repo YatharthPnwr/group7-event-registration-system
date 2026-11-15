@@ -21,9 +21,18 @@ export class NotificationService {
       await this.email.send(message);
     } catch (cause) {
       status = "FAILED";
-      error = cause instanceof Error ? cause.message : String(cause);
+      error = describeError(cause);
     }
     await this.log.record({ registrationId, type, status, error });
     return status;
   }
+}
+
+/** A readable reason. Some network errors (e.g. AggregateError for refused connections) have an empty message. */
+function describeError(cause: unknown): string {
+  if (cause instanceof Error) {
+    const code = (cause as Error & { code?: unknown }).code;
+    return cause.message || (typeof code === "string" ? code : "") || cause.name;
+  }
+  return String(cause);
 }

@@ -87,4 +87,12 @@ describe("NotificationService.sendConfirmation (US-12)", () => {
     expect(log.entries.map((e) => e.status)).toEqual(["SENT", "FAILED"]);
     expect(log.entries.every((e) => e.createdAt instanceof Date)).toBe(true);
   });
+
+  it("still records a reason when the error has an empty message", async () => {
+    email.failWith = Object.assign(new AggregateError([], ""), { code: "ECONNREFUSED" });
+
+    await service.sendConfirmation(details);
+
+    expect(log.entries[0]).toMatchObject({ status: "FAILED", error: "ECONNREFUSED" });
+  });
 });

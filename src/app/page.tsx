@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center gap-6 px-6 py-24">
@@ -9,6 +11,12 @@ export default function Home() {
         Find college and tech events, reserve your seat in one click, and get a
         confirmation email.
       </p>
+      <Link
+        href="/events"
+        className="w-fit rounded-md bg-blue-600 px-5 py-2.5 font-medium text-white hover:bg-blue-700"
+      >
+        Browse events
+      </Link>
     </main>
   );
 }

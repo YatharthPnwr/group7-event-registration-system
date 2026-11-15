@@ -1,4 +1,5 @@
-# Local development services. The app itself runs with `npm run dev`.
+# `docker compose up --build` runs the whole app offline: app, Postgres and Mailpit.
+# For development, start only the services (`docker compose up -d db mail`) and run `npm run dev`.
 services:
   db:
     image: postgres:17-alpine
@@ -22,6 +23,30 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/events?schema=public
+      DIRECT_URL: postgresql://postgres:postgres@db:5432/events?schema=public
+      AUTH_SECRET: docker-demo-only-secret-change-me
+      SMTP_HOST: mail
+      SMTP_PORT: "1025"
+      MAIL_FROM: Event Registration <no-reply@events.local>
+      SEED_ADMIN_EMAIL: admin@events.local
+      SEED_ADMIN_PASSWORD: admin-demo-123
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
 
 volumes:
   db-data:

@@ -1,13 +1,17 @@
 import { Prisma, type PrismaClient } from "@prisma/client";
 import { EmailAlreadyRegisteredError } from "@/domain/errors";
-import type { NewUser, UserRepository } from "@/domain/ports";
+import type { NewUser, UserLookup, UserRepository } from "@/domain/ports";
 import type { UserRecord } from "@/domain/user";
 
-export class PrismaUserRepository implements UserRepository {
+export class PrismaUserRepository implements UserRepository, UserLookup {
   constructor(private readonly db: PrismaClient) {}
 
   findByEmail(email: string): Promise<UserRecord | null> {
     return this.db.user.findUnique({ where: { email } });
+  }
+
+  findById(id: string): Promise<UserRecord | null> {
+    return this.db.user.findUnique({ where: { id } });
   }
 
   async create(user: NewUser): Promise<UserRecord> {

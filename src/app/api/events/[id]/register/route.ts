@@ -1,4 +1,4 @@
-import { registrationService } from "@/container";
+import { eventRepository, notificationService, registrationService, userRepository } from "@/container";
 import {
   AlreadyRegisteredError,
   EventCancelledError,
@@ -21,7 +21,22 @@ export async function POST(_request: Request, ctx: RouteContext<"/api/events/[id
   const { id } = await ctx.params;
   try {
     const registration = await registrationService.register(session.userId, id);
-    return Response.json({ registration }, { status: 201 });
+
+    // US-12: confirmation email. Awaited so it finishes before the response
+    // (serverless hosts pause work after responding). It never throws: a mail
+    // outage is logged as FAILED and the registration still stands.
+    const [user, event] = await Promise.all([userRepository.findById(session.userId), eventRepository.findById(id)]);
+    const emailStatus =
+      user && event
+        ? await notificationService.sendConfirmation({
+            registrationId: registration.id,
+            studentName: user.name,
+            studentEmail: user.email,
+            event: { title: event.title, startsAt: event.startsAt, venue: event.venue },
+          })
+        : "FAILED";
+
+    return Response.json({ registration, emailStatus }, { status: 201 });
   } catch (error) {
     if (error instanceof EventNotFoundError) {
       return Response.json({ error: error.message }, { status: 404 });

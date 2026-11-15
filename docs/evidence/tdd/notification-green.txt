@@ -1,0 +1,18 @@
+# TDD step 2 (GREEN): simplest implementation that makes the EV-15 tests pass
+# 2026-11-15 11:57 IST · npx vitest run tests/unit/notification-service.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+
+ RUN  v4.1.12 <repo>
+
+ ✓ tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > emails the student the event title, date, venue and registration ID 2ms
+ ✓ tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > logs a SENT confirmation and reports SENT 1ms
+ ✓ tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > does not throw when the mail server fails, and logs FAILED with the reason 0ms
+ ✓ tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > records every attempt with its time 0ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  11:57:41
+   Duration  136ms (transform 22ms, setup 0ms, import 42ms, tests 5ms, environment 0ms)
+

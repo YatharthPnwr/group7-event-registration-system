@@ -12,6 +12,13 @@ export default async function AdminDashboard() {
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-3xl font-bold">Admin dashboard</h1>
+        <Link
+          id="create-event-link"
+          href="/admin/events/new"
+          className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+        >
+          Create event
+        </Link>
       </div>
 
       <table id="admin-events" className="mt-8 w-full text-left text-sm">

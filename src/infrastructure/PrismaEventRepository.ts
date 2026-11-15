@@ -1,8 +1,8 @@
 import type { PrismaClient } from "@prisma/client";
 import type { EventRecord } from "@/domain/event";
-import type { EventCatalog, EventReader, UpcomingEventsQuery } from "@/domain/ports";
+import type { EventCatalog, EventReader, EventWriter, NewEvent, UpcomingEventsQuery } from "@/domain/ports";
 
-export class PrismaEventRepository implements EventReader, EventCatalog {
+export class PrismaEventRepository implements EventReader, EventCatalog, EventWriter {
   constructor(private readonly db: PrismaClient) {}
 
   findById(id: string): Promise<EventRecord | null> {
@@ -20,5 +20,9 @@ export class PrismaEventRepository implements EventReader, EventCatalog {
       },
       orderBy: { startsAt: "asc" },
     });
+  }
+
+  create(event: NewEvent): Promise<EventRecord> {
+    return this.db.event.create({ data: event });
   }
 }

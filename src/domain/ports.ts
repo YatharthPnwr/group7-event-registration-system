@@ -54,3 +54,9 @@ export interface EventCatalog {
   /** Published events that have not started yet, soonest first. */
   findUpcoming(query: UpcomingEventsQuery): Promise<EventRecord[]>;
 }
+
+export type NewEvent = Omit<EventRecord, "id" | "seatsTaken" | "status">;
+
+export interface EventWriter {
+  create(event: NewEvent): Promise<EventRecord>;
+}

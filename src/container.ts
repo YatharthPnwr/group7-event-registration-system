@@ -4,6 +4,7 @@ import { PrismaEventRepository } from "@/infrastructure/PrismaEventRepository";
 import { PrismaRegistrationRepository } from "@/infrastructure/PrismaRegistrationRepository";
 import { PrismaUserRepository } from "@/infrastructure/PrismaUserRepository";
 import { AuthService } from "@/services/AuthService";
+import { EventService } from "@/services/EventService";
 import { RegistrationService } from "@/services/RegistrationService";
 
 // Composition root: the one place that picks concrete implementations.
@@ -17,3 +18,5 @@ export const authService = new AuthService(
 );
 
 export const registrationService = new RegistrationService(eventRepository, registrationRepository);
+
+export const eventService = new EventService(eventRepository);

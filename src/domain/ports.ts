@@ -1,4 +1,5 @@
 import type { EventRecord } from "./event";
+import type { EmailMessage, NotificationLogEntry } from "./notification";
 import type { RegistrationRecord, RegistrationWithEvent } from "./registration";
 import type { Role, UserRecord } from "./user";
 
@@ -66,4 +67,17 @@ export type NewEvent = Omit<EventRecord, "id" | "seatsTaken" | "status">;
 
 export interface EventWriter {
   create(event: NewEvent): Promise<EventRecord>;
+}
+
+export interface EmailSender {
+  /** Throws if the mail server rejects or cannot be reached. */
+  send(message: EmailMessage): Promise<void>;
+}
+
+export interface NotificationLog {
+  record(entry: Omit<NotificationLogEntry, "id" | "createdAt">): Promise<NotificationLogEntry>;
+}
+
+export interface UserLookup {
+  findById(id: string): Promise<UserRecord | null>;
 }

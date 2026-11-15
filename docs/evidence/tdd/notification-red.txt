@@ -1,0 +1,77 @@
+# TDD step 1 (RED): EV-15 confirmation email, tests written before the implementation
+# 2026-11-15 11:57 IST · npx vitest run tests/unit/notification-service.test.ts
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+
+ RUN  v4.1.12 <repo>
+
+ × tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > emails the student the event title, date, venue and registration ID 3ms
+   → Not implemented
+ × tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > logs a SENT confirmation and reports SENT 0ms
+   → Not implemented
+ × tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > does not throw when the mail server fails, and logs FAILED with the reason 0ms
+   → Not implemented
+ × tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > records every attempt with its time 0ms
+   → Not implemented
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > emails the student the event title, date, venue and registration ID
+Error: Not implemented
+ ❯ NotificationService.sendConfirmation src/services/NotificationService.ts:15:11
+     13|     void this.email;
+     14|     void this.log;
+     15|     throw new Error("Not implemented");
+       |           ^
+     16|   }
+     17| }
+ ❯ tests/unit/notification-service.test.ts:49:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > logs a SENT confirmation and reports SENT
+Error: Not implemented
+ ❯ NotificationService.sendConfirmation src/services/NotificationService.ts:15:11
+     13|     void this.email;
+     14|     void this.log;
+     15|     throw new Error("Not implemented");
+       |           ^
+     16|   }
+     17| }
+ ❯ tests/unit/notification-service.test.ts:63:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > does not throw when the mail server fails, and logs FAILED with the reason
+Error: Not implemented
+ ❯ NotificationService.sendConfirmation src/services/NotificationService.ts:15:11
+     13|     void this.email;
+     14|     void this.log;
+     15|     throw new Error("Not implemented");
+       |           ^
+     16|   }
+     17| }
+ ❯ tests/unit/notification-service.test.ts:74:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/unit/notification-service.test.ts > NotificationService.sendConfirmation (US-12) > records every attempt with its time
+Error: Not implemented
+ ❯ NotificationService.sendConfirmation src/services/NotificationService.ts:15:11
+     13|     void this.email;
+     14|     void this.log;
+     15|     throw new Error("Not implemented");
+       |           ^
+     16|   }
+     17| }
+ ❯ tests/unit/notification-service.test.ts:83:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  11:57:30
+   Duration  124ms (transform 18ms, setup 0ms, import 27ms, tests 5ms, environment 0ms)
+

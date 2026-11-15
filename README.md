@@ -31,16 +31,29 @@ Students register for college and tech events. Admins manage registrations and s
 - `docs/testing/`: Agile Testing Quadrants and exploratory testing
 - `docs/metrics.md`, `docs/risks.md`: velocity, quality metrics and risk register
 
-## Run it locally
+## Run the whole app with Docker (offline demo)
+
+Needs only Docker.
+
+```bash
+docker compose up --build
+```
+
+- App: http://localhost:3000 (migrations and demo events are applied on start)
+- Emails: http://localhost:8025 (Mailpit catches every confirmation)
+- Admin login: `admin@events.local` / `admin-demo-123` (local demo only)
+
+## Develop locally
 
 Needs Node.js 22 and Docker.
 
 ```bash
 npm install
 cp .env.example .env
-docker compose up -d        # Postgres on port 5433, Mailpit inbox on http://localhost:8025
-npx prisma migrate dev      # create the tables
-npm run dev                 # http://localhost:3000
+docker compose up -d db mail   # Postgres on port 5433, Mailpit inbox on http://localhost:8025
+npx prisma migrate dev         # create the tables
+npm run db:seed                # demo events and the admin account
+npm run dev                    # http://localhost:3000
 ```
 
 ## Checks
@@ -51,5 +64,7 @@ npm run dev                 # http://localhost:3000
 | `npm run typecheck` | TypeScript, including Next.js route types |
 | `npm test` | Vitest unit tests, writes `reports/junit.xml` |
 | `npm run test:coverage` | Unit tests with a coverage report in `coverage/` |
+| `npm run test:integration` | Integration tests against Postgres (needs `DATABASE_URL`) |
+| `npm run test:e2e` | Selenium tests in headless Chrome against `BASE_URL`, HTML report in `reports/e2e/` |
 
 GitHub Actions runs all of these on every pull request, then applies the migrations to a fresh Postgres and builds the app.

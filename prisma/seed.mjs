@@ -1,5 +1,6 @@
 // Demo data for local development and the viva. Safe to run more than once.
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -59,4 +60,24 @@ for (const event of events) {
 }
 
 console.log(`Seeded ${events.length} demo events.`);
+
+// Admin account. Credentials come from the environment (see .env.example),
+// so production uses its own password.
+const adminEmail = process.env.SEED_ADMIN_EMAIL?.trim().toLowerCase();
+const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+if (adminEmail && adminPassword) {
+  await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: { role: "ADMIN" },
+    create: {
+      name: "Event Admin",
+      email: adminEmail,
+      passwordHash: await bcrypt.hash(adminPassword, 10),
+      role: "ADMIN",
+    },
+  });
+  console.log(`Admin account ready: ${adminEmail}`);
+} else {
+  console.log("SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD not set: no admin account created.");
+}
 await prisma.$disconnect();

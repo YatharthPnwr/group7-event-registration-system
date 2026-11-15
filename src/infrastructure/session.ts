@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import type { User } from "@/domain/user";
 import {
   SESSION_MAX_AGE_SECONDS,
@@ -37,4 +38,18 @@ export async function getSession(): Promise<SessionPayload | null> {
 
 export async function destroySession(): Promise<void> {
   (await cookies()).delete(COOKIE_NAME);
+}
+
+/** For server pages: the logged-in user, or a redirect to the login page. */
+export async function requireSession(nextPath: string): Promise<SessionPayload> {
+  const session = await getSession();
+  if (!session) redirect(`/login?next=${encodeURIComponent(nextPath)}`);
+  return session;
+}
+
+/** For admin pages: students are sent to the events list. */
+export async function requireAdmin(nextPath: string): Promise<SessionPayload> {
+  const session = await requireSession(nextPath);
+  if (session.role !== "ADMIN") redirect("/events");
+  return session;
 }

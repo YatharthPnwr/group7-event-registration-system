@@ -1,34 +1,27 @@
 # Sprint 2 Planning
 
-**Date:** Fri 13 Nov 2026, 14:30 **Facilitator:** Dhanraj
-**Sprint window:** Fri 13 Nov 16:00 to Sun 15 Nov 13:00
+**Date:** Sun 15 Nov 2026, 11:31 IST
+**Sprint window:** Sun 15 Nov 11:31 to 23:00 IST (completed 12:22)
 
-**Sprint goal:** Admin manages registrations, students get confirmation emails, and the system is deployed and regression tested.
+**Sprint goal:** Students can log in, browse events, register and manage their registrations with a confirmation email (TDD module 2); admins can create events and see who registered; a Selenium smoke test runs in CI and the app runs locally with Docker.
 
 ## Using Sprint 1 velocity
 
-- Sprint 1 velocity (points of fully Done stories): ____ SP
-- Sprint 2 commitment, sized to that velocity: ____ SP
-- If Sprint 1 velocity is below the forecast, drop the Should stories first: US-05, US-06, then US-13.
-
-## Retrospective actions carried in
-
-1.
-2.
+- Sprint 1 velocity: **11 SP** (planned 25).
+- The 5 unfinished Sprint 1 stories (14 SP) were carried over by "Complete sprint → move open work items to a new sprint".
+- Only stories the brief requires were added: TDD module 2 (EV-15), admin view of registrations (EV-17) and local hosting (EV-22). Every Should and Could story stayed in the backlog.
+- **Commitment: 25 SP**, above Sprint 1's velocity. That was accepted because the carried-over stories were already partly built.
 
 ## Sprint Backlog
 
-| Story | Jira key | Owner | SP (final) | Sub-tasks |
+| Story | Jira key | Owner | Story points | Note |
 |---|---|---|---|---|
-| US-12 Confirmation email on registration (TDD 2) | | Dhanraj | | failing tests, service, SMTP sender, wire into register route |
-| US-13 Admin resends a confirmation | | Dhanraj | | |
-| US-09 Admin views registrations per event | | Yatharth | | |
-| US-10 Admin removes a registration | | Aarya | | |
-| US-05 Admin edits or cancels an event | | Yatharth | | |
-| US-06 Search and filter events | | Aarya | | |
-| US-17 Full Selenium regression suite | | Aarya | | |
-| US-18 Docker setup and deployment | | Yatharth | | |
-| Carried over from Sprint 1, if any | | | | |
-| **Committed total** | | | | |
-
-**Evidence:** `../evidence/screenshots/2026-11-13_sprint2-backlog.png`
+| US-02 Log in and log out with roles | EV-9 | Dhanraj | 3 | carried over |
+| US-03 Admin creates an event | EV-10 | Dhanraj | 3 | carried over |
+| US-08 View and cancel my registrations | EV-13 | Dhanraj | 3 | carried over |
+| US-04 Browse upcoming events | EV-11 | Aarya | 2 | carried over |
+| US-16 Selenium smoke test | EV-14 | Aarya | 3 | carried over |
+| US-12 Confirmation email (TDD 2) | EV-15 | Dhanraj | 5 | new |
+| US-09 Admin views registrations per event | EV-17 | Yatharth | 3 | new |
+| US-18 Docker setup (and deployment) | EV-22 | Yatharth | 3 | new |
+| **Committed total** | | | **25** | |

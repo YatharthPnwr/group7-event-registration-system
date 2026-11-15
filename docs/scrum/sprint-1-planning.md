@@ -1,32 +1,24 @@
 # Sprint 1 Planning
 
-**Date:** Wed 11 Nov 2026, 11:10 **Facilitator:** Dhanraj
-**Sprint window:** Wed 11 Nov 12:00 to Fri 13 Nov 13:00
+**Date:** Wed 11 Nov 2026 **Facilitator:** Dhanraj (Scrum Master)
+**Sprint window:** started Wed 11 Nov 06:30 IST, planned end Fri 13 Nov 13:00 IST, completed Sun 15 Nov 11:31 IST
 
-**Sprint goal:** A student can sign up, browse events and register for a seat, on green CI.
-
-## Capacity
-
-| Member | Hours available this sprint | Notes |
-|---|---|---|
-| Aarya | | |
-| Dhanraj | | |
-| Yatharth | | |
+**Sprint goal (as entered in Jira):** Enable students to sign up, log in, browse upcoming events, and register for events, while providing administrators with event management and registration management capabilities. Establish a reliable CI/CD pipeline and ensure all implemented features pass the required tests.
 
 ## Sprint Backlog
 
-| Story | Jira key | Owner | SP (final) | Sub-tasks |
-|---|---|---|---|---|
-| US-15 Repository and CI pipeline | | Yatharth | | |
-| US-01 Sign up | | Aarya | | |
-| US-02 Log in and log out with roles | | Dhanraj | | |
-| US-03 Admin creates an event | | Dhanraj | | |
-| US-04 Browse upcoming events | | Aarya | | |
-| US-07 Register for an event (TDD 1) | | Yatharth | | failing tests, service, API route, Register button, concurrency test |
-| US-08 View and cancel my registrations | | Dhanraj | | |
-| US-16 Selenium smoke test | | Aarya | | |
-| **Committed total** | | | | |
+| Story | Jira key | Owner | Story points |
+|---|---|---|---|
+| US-15 Repository and CI pipeline | EV-7 | Yatharth | 3 |
+| US-01 Sign up | EV-8 | Aarya | 3 |
+| US-02 Log in and log out with roles | EV-9 | Dhanraj | 3 |
+| US-03 Admin creates an event | EV-10 | Dhanraj | 3 |
+| US-04 Browse upcoming events | EV-11 | Aarya | 2 |
+| US-07 Register for an event (TDD 1) | EV-12 | Yatharth | 5 |
+| US-08 View and cancel my registrations | EV-13 | Dhanraj | 3 |
+| US-16 Selenium smoke test | EV-14 | Aarya | 3 |
+| **Planned total** | | | **25** |
 
-Stories moved back to the Product Backlog during planning, if any: ________
+Story points were agreed by Planning Poker. All 19 backlog stories were estimated, totalling 61 SP.
 
-**Evidence:** `../evidence/screenshots/2026-11-11_sprint1-backlog.png`
+**Process note:** the sprint was started in Jira before the eight stories were dragged into it, so Jira recorded a commitment of 0 SP. See `../metrics.md`.

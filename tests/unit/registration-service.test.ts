@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   AlreadyRegisteredError,
+  CancellationNotAllowedError,
+  RegistrationNotFoundError,
   EventCancelledError,
   EventFullError,
   EventNotFoundError,
@@ -60,6 +62,26 @@ class FakeStore implements EventReader, RegistrationRepository {
     };
     this.registrations.push(created);
     return { ...created };
+  }
+
+  async findWithEvent(id: string) {
+    const r = this.registrations.find((x) => x.id === id);
+    if (!r) return null;
+    const e = this.events.get(r.eventId)!;
+    return { ...r, event: { id: e.id, title: e.title, venue: e.venue, startsAt: e.startsAt } };
+  }
+
+  async listForUser(userId: string) {
+    const mine = this.registrations.filter((r) => r.userId === userId);
+    return Promise.all(mine.map(async (r) => (await this.findWithEvent(r.id))!));
+  }
+
+  async cancel(id: string) {
+    const r = this.registrations.find((x) => x.id === id)!;
+    if (r.status !== "CONFIRMED") throw new CancellationNotAllowedError("Registration already cancelled");
+    r.status = "CANCELLED";
+    this.events.get(r.eventId)!.seatsTaken -= 1;
+    return { ...r };
   }
 }
 
@@ -122,5 +144,62 @@ describe("RegistrationService.register (US-07)", () => {
     expect(again).toMatchObject({ id: first.id, status: "CONFIRMED" });
     expect(store.registrations).toHaveLength(1);
     expect(seatsLeft(store.events.get("event-1")!)).toBe(6);
+  });
+});
+
+describe("RegistrationService.cancel (US-08)", () => {
+  let store: FakeStore;
+  let service: RegistrationService;
+
+  beforeEach(() => {
+    store = new FakeStore();
+    store.events.set("event-1", makeEvent());
+    service = new RegistrationService(store, store);
+  });
+
+  it("cancels before the event starts and gives the seat back", async () => {
+    const reg = await service.register("student-1", "event-1", NOW);
+
+    const cancelled = await service.cancel("student-1", reg.id, NOW);
+
+    expect(cancelled.status).toBe("CANCELLED");
+    expect(seatsLeft(store.events.get("event-1")!)).toBe(7);
+  });
+
+  it("lets the student register again after cancelling", async () => {
+    const reg = await service.register("student-1", "event-1", NOW);
+    await service.cancel("student-1", reg.id, NOW);
+
+    await expect(service.register("student-1", "event-1", NOW)).resolves.toMatchObject({ status: "CONFIRMED" });
+  });
+
+  it("treats another student's registration as not found", async () => {
+    const reg = await service.register("student-1", "event-1", NOW);
+
+    await expect(service.cancel("student-2", reg.id, NOW)).rejects.toThrow(RegistrationNotFoundError);
+    expect(store.registrations[0].status).toBe("CONFIRMED");
+  });
+
+  it("refuses to cancel twice", async () => {
+    const reg = await service.register("student-1", "event-1", NOW);
+    await service.cancel("student-1", reg.id, NOW);
+
+    await expect(service.cancel("student-1", reg.id, NOW)).rejects.toThrow("Registration already cancelled");
+  });
+
+  it("refuses to cancel once the event has started", async () => {
+    const reg = await service.register("student-1", "event-1", NOW);
+    const duringEvent = new Date("2026-11-20T09:30:00Z");
+
+    await expect(service.cancel("student-1", reg.id, duringEvent)).rejects.toThrow("The event has already started");
+  });
+
+  it("lists the student's registrations with event details", async () => {
+    await service.register("student-1", "event-1", NOW);
+
+    const list = await service.listForUser("student-1");
+
+    expect(list).toHaveLength(1);
+    expect(list[0]).toMatchObject({ status: "CONFIRMED", event: { title: "Intro to Docker", venue: "Lab 3" } });
   });
 });

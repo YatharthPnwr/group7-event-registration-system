@@ -56,3 +56,17 @@ export class InvalidCredentialsError extends Error {
     this.name = "InvalidCredentialsError";
   }
 }
+
+export class RegistrationNotFoundError extends Error {
+  constructor() {
+    super("Registration not found");
+    this.name = "RegistrationNotFoundError";
+  }
+}
+
+export class CancellationNotAllowedError extends Error {
+  constructor(reason: string) {
+    super(reason);
+    this.name = "CancellationNotAllowedError";
+  }
+}

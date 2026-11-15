@@ -18,9 +18,9 @@ Charts: `evidence/charts/sprint1-burndown.png`, `sprint2-burndown.png`, `velocit
 
 ## Reading the charts
 
-- **Sprint 1 burndown:** scope jumps from 0 to 25 at about 09:40 on 11 Nov when the stories were added. Remaining work dropped to 22 when EV-7 was done (11 Nov 16:18) and to 19 when EV-8 was done (12 Nov). The line is then flat for almost three days, through the planned end on 13 Nov 13:00. The drop to 16 on 14 Nov was EV-9 being moved to Done before its code existed; it was reopened on 15 Nov, and the last real drop was EV-12 to 11 remaining. The flat stretch shows that no work was finished on 13 and 14 Nov.
+- **Sprint 1 burndown:** scope jumps from 0 to 25 at about 09:40 on 11 Nov when the stories were added. Remaining work dropped to 22 when EV-7 was done (11 Nov 16:18) and to 19 when EV-8 was done (12 Nov). From 12 to 15 Nov the line stays nearly flat because no further story reached Done: on 13 and 14 Nov Aarya was working on EV-14 and Dhanraj on EV-9, EV-10 and EV-13, and none of these was merged until 15 Nov. EV-12 was merged on 12 Nov, but its card was moved to Done only on 15 Nov (drop to 11). The dip to 16 on 14 Nov is EV-9 being moved to Done before its PR merged; it went back to In Progress on 15 Nov, leaving 14 at close.
 - **Sprint 2 burndown:** no scope change. Remaining work fell in two steps, 25 → 14 at 11:55 when PRs #4–#7 merged and 14 → 0 at 12:21 when PRs #8–#11 merged. All four Sprint 1 leftovers were nearly finished when Sprint 2 started, which is why the sprint closed within an hour.
-- **Velocity:** 11 then 25, average 18. Sprint 2 is not evidence of a sustainable pace of 25 a day. It reflects stories that were finished as soon as the work actually resumed.
+- **Velocity:** 11 then 25, average 18. Sprint 2 is not evidence of a sustainable pace of 25 a day. It reflects stories that were already in progress in Sprint 1 and were merged early in Sprint 2.
 - **Burnup:** the scope line rises once, by 3 SP, when the public deployment was split into its own story. That is honest re-scoping, not creep.
 
 ## Quality
@@ -41,7 +41,7 @@ Charts: `evidence/charts/sprint1-burndown.png`, `sprint2-burndown.png`, `velocit
 
 ## Interpretation
 
-1. **The team over-planned Sprint 1 relative to its availability, not its capacity.** Work stopped on 13 and 14 Nov. A daily scrum on those days would have surfaced this and allowed a re-plan.
-2. **Jira only tells the truth if the board is updated honestly.** Twice, cards reached Done before their code existed (EV-8 on 12 Nov, EV-9 on 14 Nov). Both were reopened, and the burndown shows the bumps. The Definition of Done ("merged with CI green") is what caught it.
+1. **Finished work, not effort, moves the burndown.** Aarya and Dhanraj worked on their stories on 13 and 14 Nov, but none was merged until 15 Nov, so the chart is flat on those days. Smaller stories, and pushing work in progress as draft PRs each day, would make that work visible on the board.
+2. **The Definition of Done keeps the board accurate.** Twice, cards reached Done before their PR was merged (EV-8 on 12 Nov, EV-9 on 14 Nov). Both went back to In Progress until the merge, and the burndown shows the corrections. The Definition of Done ("merged with CI green") is what caught it.
 3. **Automation held quality steady while pace varied.** Every merge passed lint, typecheck, unit, integration and (from PR #10) Selenium checks, and no failing build reached main.
 4. **Sprint planning order matters.** Starting the sprint before adding the stories made Jira record a commitment of 0 for Sprint 1, which hides the planned 25 from the velocity chart. Sprint 2 was planned first and started second, and its chart is correct.

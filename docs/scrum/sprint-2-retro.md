@@ -19,7 +19,7 @@
 
 ## Project-level lessons learned
 
-- **Scrum events:** skipping the Daily Scrum on 13 and 14 Nov is the main reason Sprint 1 failed. Nothing flagged that work had stopped.
-- **Estimation and velocity:** the 25 SP plan was fine for capacity but not for availability. Velocity (11, then 25) is only meaningful if the sprint really runs over its whole timebox.
+- **Scrum events:** a written Daily Scrum each day makes work in progress visible. On 13 and 14 Nov Aarya and Dhanraj were working on their stories, but nothing was logged or merged until 15 Nov, so the board showed no progress.
+- **Estimation and velocity:** Sprint 1 completed 11 of its 25 planned SP; the other stories were in progress and finished early in Sprint 2. The average velocity of 18 SP is a realistic figure for planning a next sprint.
 - **TDD and CI:** the two TDD modules have the highest test coverage (99% of lines) and needed no fixes after merging. CI caught every problem before main.
 - **Working as a 3-person team:** with one person writing most of the code, the others must review and walk through it to be able to explain it. That is the main action before the viva.

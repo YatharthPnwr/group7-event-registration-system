@@ -1,6 +1,6 @@
-import type { ConfirmationDetails, NotificationStatus } from "@/domain/notification";
+import type { ConfirmationDetails, EmailMessage, NotificationStatus, NotificationType } from "@/domain/notification";
 import type { EmailSender, NotificationLog } from "@/domain/ports";
-import { formatDateTime } from "@/lib/format";
+import { confirmationEmail } from "./notifications/templates";
 
 export class NotificationService {
   constructor(
@@ -9,28 +9,21 @@ export class NotificationService {
   ) {}
 
   /** US-12: email the student their confirmation. Never throws. */
-  async sendConfirmation(details: ConfirmationDetails): Promise<NotificationStatus> {
-    const { event } = details;
+  sendConfirmation(details: ConfirmationDetails): Promise<NotificationStatus> {
+    return this.deliver(details.registrationId, "CONFIRMATION", confirmationEmail(details));
+  }
+
+  /** Sends one email and logs the attempt, SENT or FAILED. A mail outage is reported, not thrown. */
+  private async deliver(registrationId: string, type: NotificationType, message: EmailMessage): Promise<NotificationStatus> {
+    let status: NotificationStatus = "SENT";
+    let error: string | null = null;
     try {
-      await this.email.send({
-        to: details.studentEmail,
-        subject: `You're registered: ${event.title}`,
-        text: [
-          `Hi ${details.studentName},`,
-          "",
-          `Your seat is confirmed for ${event.title}.`,
-          "",
-          `When: ${formatDateTime(event.startsAt)}`,
-          `Where: ${event.venue}`,
-          `Registration ID: ${details.registrationId}`,
-        ].join("\n"),
-      });
-      await this.log.record({ registrationId: details.registrationId, type: "CONFIRMATION", status: "SENT", error: null });
-      return "SENT";
-    } catch (error) {
-      const reason = error instanceof Error ? error.message : String(error);
-      await this.log.record({ registrationId: details.registrationId, type: "CONFIRMATION", status: "FAILED", error: reason });
-      return "FAILED";
+      await this.email.send(message);
+    } catch (cause) {
+      status = "FAILED";
+      error = cause instanceof Error ? cause.message : String(cause);
     }
+    await this.log.record({ registrationId, type, status, error });
+    return status;
   }
 }
